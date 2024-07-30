@@ -3,7 +3,7 @@
 #define byte uint8_t
 
 #define PFM_MIN_FREQUENCY       100
-#define PFM_MAX_FREQUENCY       500
+#define PFM_MAX_FREQUENCY       450
 
 // UI
 // on off button
