@@ -104,6 +104,8 @@ void Settings::resetSleep()
 {
     // wake up from sleep ?
     if (sleepRemain==0) {
+        // reset tick counter
+        uwTick =0;
         // PageJump pg;
         // pg.page = 0;
         eventSystem.dispatchMessage(EventType::GOTO_PAGE, 0ll);
@@ -210,27 +212,30 @@ void Settings::saveSetting()
 }
 void Settings::loadSettings()
 {
-    // return;
-    uint8_t *data = (uint8_t *)&storage;
-    int len = sizeof(storage);
-    for (int i = 0; i < len; i++)
-    {
-        data[i]=readByte(EEPROM_OFFSET+i);
-    }
-    int i=0;
-    speedType=(SPEED_TYPE)storage[i++];
-    autoGear=(EN_FAN_AUTO)storage[i++];
-    gear=storage[i++];
-    maxGear=storage[i++];
-    lcdBrightness=storage[i++];
-    lcdMaxBrightness=storage[i++];
-    minTemperature=storage[i++];
-    maxTemperature=storage[i++];
-    sleepTime=storage[i++];
-    powerOff=storage[i++];
+    if (eepromError==0) {
+        uint8_t *data = (uint8_t *)&storage;
+        int len = sizeof(storage);
+        for (int i = 0; i < len; i++)
+        {
+            data[i]=readByte(EEPROM_OFFSET+i);
+        }
+        int i=0;
+        speedType=(SPEED_TYPE)storage[i++];
+        autoGear=(EN_FAN_AUTO)storage[i++];
+        gear=storage[i++];
+        maxGear=storage[i++];
+        lcdBrightness=storage[i++];
+        lcdMaxBrightness=storage[i++];
+        minTemperature=storage[i++];
+        maxTemperature=storage[i++];
+        sleepTime=storage[i++];
+        powerOff=storage[i++];
 
-    powerOffRemain=powerOff;
+        powerOffRemain=powerOff;
+       
+    }
     soundState.push(0);
+    
 
 }
 void Settings::handleAutoPowerOff(ThreadData *data)
