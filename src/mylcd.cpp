@@ -49,7 +49,7 @@ void LCDThread::initTFT()
 
   tft = new TFT_eSPI();
   tft->begin();
-  tft->setRotation(2);
+  tft->setRotation(0);
   tft->fillScreen(TFT_BLACK);
   
 }
